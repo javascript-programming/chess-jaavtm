@@ -1,22 +1,22 @@
 export class Cell {
-  file_c: string;
-  file_n: number;
-  positions: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  static files: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  file: string;
+  rank: number;
 
   constructor (c: number, n: number) {
-    this.file_c = this.positions[c];
-    this.file_n = n;
+    this.file = Cell.files[c];
+    this.rank = n;
   }
 
   getPosition() {
-    return this.file_c + this.file_n;
+    return this.file + this.rank;
   }
 
   getX () {
-    return this.positions.indexOf(this.file_c);
+    return Cell.files.indexOf(this.file);
   }
 
   getY () {
-    return this.file_n;
+    return this.rank;
   }
 }

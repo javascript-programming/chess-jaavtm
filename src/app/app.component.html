@@ -1,19 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+<div class="main">
+  <div style="text-align:center">
+    <h1>
+      Welcome to {{ title }}!
+    </h1>
+  </div>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Game</mat-card-title>
+      <mat-card-subtitle>player 1 vs player 2</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-board></app-board>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>Game</mat-card-title>
-    <mat-card-subtitle>player 1 vs player 2</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <app-board></app-board>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>

@@ -1,0 +1,34 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://unpkg.com/mocha@5.2.0/mocha.css" rel="stylesheet" />
+</head>
+<body>
+<div id="mocha"></div>
+
+<script src="https://unpkg.com/chai/chai.js"></script>
+<script src="https://unpkg.com/mocha@5.2.0/mocha.js"></script>
+<script src="../src/assets/webclient/main.js"></script>
+
+<script>mocha.setup('bdd')</script>
+<script src="test.chess.contract.js"></script>
+
+<script type="module">
+
+  import('../contracts/Game.js').then( module => {
+    window.ChessGame = module.ChessGame;
+
+    const webclient = new WebClient('ws://localhost:3000');
+    webclient.connect().then(async () => {
+      window.webclient = webclient;
+      mocha.run();
+    });
+  });
+
+</script>
+<script>
+
+</script>
+</body>
+</html>
