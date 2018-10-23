@@ -100,9 +100,9 @@ export class ChessGame {
     if (gameRecord.turn === this.caller) {
 
       const game = new this.Chess(gameRecord.fen);
-      const move = game.move(move);
+      const moveResult = game.move(move);
 
-      if (move) {
+      if (moveResult) {
         gameRecord.pgn = game.pgn();
         gameRecord.fen = game.fen();
         const previousTurn = gameRecord.turn;
@@ -143,7 +143,7 @@ export class ChessGame {
           status : gameRecord.status,
           turn   : gameRecord.turn,
           fen    : gameRecord.fen,
-          move   : move
+          move   : moveResult
       }
       }
       else {

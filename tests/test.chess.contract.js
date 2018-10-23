@@ -2,7 +2,7 @@ describe('ChessContract', () => {
 
   let address = '', accounts;
 
-  let player1, player2, gameId = 0;
+  let player1, player2, gameId = 0, fen, chess;
 
   const assertBoardProperties = obj => {
     chai.should();
@@ -27,7 +27,7 @@ describe('ChessContract', () => {
       }).catch(done);
     });
 
-    it('Should return correct abi', (done) => {
+    it('Should return correct abi', done => {
       webclient.upload(ChessGame).then(result => {
         assertBoardProperties(result.abi);
         done();
@@ -116,7 +116,7 @@ describe('ChessContract', () => {
       }).catch(done);
     });
 
-    it('Player1 wants to start the game', (done) => {
+    it('Player1 wants to start the game', done => {
       player1.startGame(gameId, accounts[0], accounts[1], new Date().getTime()).then(result => {
         result.should.equal('foo');//may not happen
       }).catch(result => {
@@ -133,8 +133,9 @@ describe('ChessContract', () => {
 
         if (calls === 2) {
           result.fen.should.equal('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+          fen = result.fen;
           const board = await player1.getBoard(gameId);
-          console.log(board);
+          board.should.exist;
           done();
         }
       };
@@ -150,6 +151,38 @@ describe('ChessContract', () => {
         done();
       });
     }).timeout(5000);
+
+    it('Play game', done => {
+
+      let calls = 0;
+
+      const makeMove = async fen => {
+        chess = new Chess(fen);
+        console.log(chess.ascii());
+
+        if (!chess.game_over()) {
+          const moves = chess.moves(),
+            move = moves[Math.floor(Math.random() * moves.length)],
+            player = chess.turn() === 'w' ? player1 : player2;
+
+          calls = 0;
+          const result = await player.move(gameId, move);
+        } else {
+          done();
+        }
+      };
+
+      player1.onMove = (result, options) => {
+        calls++;
+
+        if (calls === 2) {
+          makeMove(result.fen);
+        }
+      };
+
+      makeMove(fen);
+
+    }).timeout(500000)
 
   });
 });
