@@ -655,7 +655,7 @@ export class ChessGame {
         active : true
       };
     } else {
-      throw Error('You are already registered with this account');
+      throw new Error('You are already registered with this account');
     }
   }
 
