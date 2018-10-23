@@ -128,11 +128,13 @@ describe('ChessContract', () => {
     it('Player2 starts the game', (done) => {
 
       let calls = 0;
-      player1.onStartGame = (result, options) => {
+      player1.onStartGame = async (result, options) => {
         calls++;
 
         if (calls === 2) {
           result.fen.should.equal('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+          const board = await player1.getBoard(gameId);
+          console.log(board);
           done();
         }
       };
@@ -147,7 +149,7 @@ describe('ChessContract', () => {
         result.should.equal('foo');//may not happen
         done();
       });
-    });
+    }).timeout(5000);
 
   });
 });
