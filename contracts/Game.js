@@ -113,29 +113,22 @@ export class ChessGame {
             gameRecord.gameOver = true;
 
             if (game.in_checkmate()) {
-              this.state.players[previousTurn].coins += gameRecord.fee;
+              this.state.players[previousTurn].coins += gameRecord.fee * 2;
               this.state.players[previousTurn].won += 1;
               this.state.players[gameRecord.turn].lost += 1;
               gameRecord.status = 'win';
             }
 
           if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
-            this.state.players[previousTurn].coins += gameRecord.fee / 2;
+            this.state.players[previousTurn].coins += gameRecord.fee;
             this.state.players[previousTurn].draw += 1;
-            this.state.players[gameRecord.turn].coins += gameRecord.fee / 2;
+            this.state.players[gameRecord.turn].coins += gameRecord.fee;
             this.state.players[gameRecord.turn].draw += 1;
 
             if (game.in_draw()) {
               gameRecord.status = 'draw';
             }
 
-            if (game.in_stalemate()) {
-              gameRecord.status = 'statemate';
-            }
-
-            if (game.in_threefold_repetition()) {
-              gameRecord.status = 'threefold'
-            }
           }
         }
 
@@ -199,7 +192,7 @@ export class ChessGame {
   }
 
   getPlayer (address) {
-      return this.state.players[address];
+      return this.state.players[address || this.caller];
   }
 
   getActivePlayers () {

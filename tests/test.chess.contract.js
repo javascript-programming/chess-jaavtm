@@ -2,7 +2,7 @@ describe('ChessContract', () => {
 
   let address = '', accounts;
 
-  let player1, player2, gameId = 0, fen, chess;
+  let player1, player2, gameId = 0, fen, chess, fee = 10;
 
   const assertBoardProperties = obj => {
     chai.should();
@@ -105,10 +105,10 @@ describe('ChessContract', () => {
           done();
       };
 
-      player1.createGame(5, 'Welcome to this game').then(result => {
+      player1.createGame(fee, 'Welcome to this game').then(result => {
         const data = result.data;
         data.creator.should.equal(accounts[0]);
-        data.fee.should.equal(5);
+        data.fee.should.equal(fee);
         data.status.should.equal('open');
         data.messages.should.deep.include({from: 'Player1', message : 'Welcome to this game' });
         gameId = data.id;
@@ -154,20 +154,52 @@ describe('ChessContract', () => {
 
     it('Play game', done => {
 
-      let calls = 0;
+      let calls = 0, lastResult;
 
       const makeMove = async fen => {
         chess = new Chess(fen);
         console.log(chess.ascii());
 
+        const player = chess.turn() === 'w' ? player1 : player2;
+
         if (!chess.game_over()) {
           const moves = chess.moves(),
-            move = moves[Math.floor(Math.random() * moves.length)],
-            player = chess.turn() === 'w' ? player1 : player2;
+            move = moves[Math.floor(Math.random() * moves.length)];
 
           calls = 0;
-          const result = await player.move(gameId, move);
+          lastResult = await player.move(gameId, move);
         } else {
+          const result = lastResult.data;
+
+          const whitePlayer = await player1.getPlayer();
+          const blackPlayer = await player2.getPlayer();
+
+          if (chess.in_checkmate()) {
+            result.status.should.equal('win');
+
+            const winner = result.move.color === 'w' ? whitePlayer : blackPlayer;
+            const loser = result.move.color === 'b' ? whitePlayer : blackPlayer;
+            winner.won.should.equal(1);
+            loser.lost.should.equal(1);
+
+            winner.coins.should.equal(110);
+            loser.coins.should.equal(90);
+
+            console.log('winner is ');
+            console.log(winner);
+
+          } else {
+
+            whitePlayer.coins.should.equal(100);
+            blackPlayer.coins.should.equal(100);
+
+            whitePlayer.draw.should.equal(1);
+            blackPlayer.draw.should.equal(1);
+
+            if (chess.in_draw())
+              result.status.should.equal('draw');
+          }
+
           done();
         }
       };
