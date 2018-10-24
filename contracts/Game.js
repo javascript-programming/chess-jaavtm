@@ -47,7 +47,8 @@ export class ChessGame {
       creator   : this.caller,
       status    : 'open',
       fee       : fee,
-      messages  : [{ from : this.state.players[this.caller].name, message : message || 'Welcome, lets play' }]
+      messages  : [{ from : this.state.players[this.caller].name, message : message || 'Welcome, lets play' }],
+      moves     : []
     };
 
     return this.state.games[gameId];
@@ -101,6 +102,7 @@ export class ChessGame {
 
       const game = new this.Chess(gameRecord.fen);
       const moveResult = game.move(move);
+      gameRecord.moves.push(moveResult);
 
       if (moveResult) {
         gameRecord.pgn = game.pgn();
@@ -117,6 +119,7 @@ export class ChessGame {
               this.state.players[previousTurn].won += 1;
               this.state.players[gameRecord.turn].lost += 1;
               gameRecord.status = 'win';
+              gameRecord.winner = previousTurn;
             }
 
           if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
@@ -128,7 +131,6 @@ export class ChessGame {
             if (game.in_draw()) {
               gameRecord.status = 'draw';
             }
-
           }
         }
 

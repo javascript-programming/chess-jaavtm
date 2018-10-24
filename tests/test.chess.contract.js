@@ -174,6 +174,9 @@ describe('ChessContract', () => {
           const whitePlayer = await player1.getPlayer();
           const blackPlayer = await player2.getPlayer();
 
+          const game = await player1.getGame(gameId);
+          console.log(game);
+
           if (chess.in_checkmate()) {
             result.status.should.equal('win');
 
