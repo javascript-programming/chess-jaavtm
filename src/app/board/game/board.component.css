@@ -4,3 +4,9 @@ mat-grid-tile {
 
 mat-grid-list {
 }
+
+
+mat-card {
+  width: 50%;
+  height: 50%;
+}
