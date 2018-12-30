@@ -8,6 +8,7 @@ import 'hammerjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { BoardModule } from './board/board.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { BoardModule } from './board/board.module';
   imports: [
     BrowserModule,
     BoardModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
