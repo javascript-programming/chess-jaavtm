@@ -3,10 +3,10 @@ import { Cell } from './cell';
 
 @Component({
   selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.css']
 })
-export class BoardComponent implements OnInit {
+export class GameComponent implements OnInit {
 
   cells: Cell[] = [];
 

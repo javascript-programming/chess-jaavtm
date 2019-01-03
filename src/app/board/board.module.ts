@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BoardComponent} from './game/board.component';
+import { GameComponent} from './game/game.component';
 
 import { BoardRoutingModule } from './board-routing.module';
 
@@ -10,6 +10,8 @@ import {
   MatGridListModule,
   MatButtonModule
 } from '@angular/material';
+import { CreateComponent } from './create/create.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -21,8 +23,8 @@ import {
     MatButtonModule
   ],
   exports: [
-    BoardComponent
+    GameComponent
   ],
-  declarations: [BoardComponent]
+  declarations: [GameComponent, CreateComponent, ChatComponent]
 })
 export class BoardModule { }

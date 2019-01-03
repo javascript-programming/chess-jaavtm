@@ -9,6 +9,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { BoardModule } from './board/board.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { DashboardModule} from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     BoardModule,
+    DashboardModule,
+    AuthModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],
