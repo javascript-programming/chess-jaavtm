@@ -17,7 +17,7 @@
 
 <script type="module">
 
-  import('../contracts/Game.js').then( module => {
+  import('../contracts/ChessGame.js').then(module => {
     window.ChessGame = module.ChessGame;
 
     const webclient = new WebClient('ws://localhost:3000');

@@ -32,16 +32,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
+    if (this.authService.address) { return true; }
 
     this.authService.redirectUrl = url;
 
-    const navigationExtras: NavigationExtras = {
-      queryParams: { 'session_id': 'password' },
-      fragment: 'anchor'
-    };
-
-    this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/login']);
     return false;
   }
 }

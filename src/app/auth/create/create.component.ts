@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateComponent implements OnInit {
 
+  hide = true;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  createPlayer () {
+
   }
 
 }

@@ -25,7 +25,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/webclient/main.js"
+            ]
           },
           "configurations": {
             "production": {
