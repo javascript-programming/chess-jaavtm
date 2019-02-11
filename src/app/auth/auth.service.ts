@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
+
+import { ChessService} from '../chess.service';
+import { Credentials} from './credentials';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  address: String;
-  password: String;
-  username: String;
+  credentials: Credentials;
   redirectUrl: string;
 
-  login(): Observable<boolean> {
-    return of(true).pipe(
-      delay(1000),
-      tap(val => this.address = 'something')
-    );
+  constructor(public chessService: ChessService) {
+    this.credentials = new Credentials();
+  }
+
+  login(): Observable<any> {
+    return from(this.chessService.getAccount(this.credentials.name, this.credentials.password));
   }
 
   logout(): void {
-    this.address = null;
-    this.password = null;
-    this.username =  null;
+    this.credentials = new Credentials();
   }
 }

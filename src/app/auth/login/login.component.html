@@ -4,11 +4,11 @@
   </mat-card-header>
   <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="Enter your playername">
+        <input [(ngModel)]="authService.credentials.name" matInput placeholder="Enter your playername">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+        <input [(ngModel)]="authService.credentials.password" matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
 

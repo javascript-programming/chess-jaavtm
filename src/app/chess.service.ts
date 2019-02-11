@@ -11,16 +11,34 @@ declare global {
 export class ChessService {
 
   private client: any;
-  private address: String;
+  private address: String; // contract address set in environment
   private contract: any;
+  private connected = false;
 
   constructor() {
     this.client = new window.WebClient(environment.tendermintHost);
     this.address = environment.contract;
   }
 
-  async getAccount (name) {
-    return await this.client.getAccount(name);
+  connect () {
+    return new Promise((resolve, reject) => {
+      if (!this.connected) {
+        this.client.connect().then(() => {
+          this.connected = true;
+          resolve();
+        }).catch(reject);
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  getAccount (name , password) {
+      return new Promise((resolve, reject) => {
+        this.connect().then(() => {
+          this.client.getAccount(name, password).then(resolve).catch(reject);
+        }).catch(reject);
+      });
   }
 
   getContract(account) {

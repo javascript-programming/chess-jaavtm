@@ -18,13 +18,15 @@ export class LoginComponent implements OnInit {
   }
 
   login () {
-    this.authService.login().subscribe(() => {
+    this.authService.login().subscribe((result) => {
 
-      if (this.authService.address !== null) {
-        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/dashboard';
+      if (this.authService.credentials.isVerified()) {
+        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'dashboard';
         this.router.navigate([redirect]);
       }
-    });
+    }, (error => {
+      console.log(error);
+    }));
   }
 
 }

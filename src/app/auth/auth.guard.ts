@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.address) { return true; }
+    if (this.authService.credentials.isVerified()) { return true; }
 
     this.authService.redirectUrl = url;
 

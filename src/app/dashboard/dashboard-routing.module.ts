@@ -6,7 +6,6 @@ import { PlayersComponent } from './players/players.component';
 import { CardComponent } from './card/card.component';
 import { AuthGuard } from '../auth/auth.guard';
 
-
 const routes: Routes = [
   {
     path: '',

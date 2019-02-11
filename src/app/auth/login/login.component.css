@@ -3,6 +3,10 @@ mat-card-content {
   flex-direction: column;
 }
 
+::ng-deep .mat-card-header-text {
+  margin : 0 !important;
+}
+
 mat-card-content > * {
   width: 100%;
 }
