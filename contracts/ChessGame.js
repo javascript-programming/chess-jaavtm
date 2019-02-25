@@ -28,6 +28,7 @@ export class ChessGame {
       };
 
       this.state.users[name] = this.caller;
+      return this.getPlayer();
 
     } else {
       throw new Error('You are already registered with this account');

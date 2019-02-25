@@ -23,7 +23,6 @@ export class AuthService {
     return from(new Promise((resolve, reject) => {
       this.chessService.getAccount(this.credentials.name, this.credentials.password).then((result: any) => {
         credentials.address = result.account;
-        resolve(result);
       }).catch(reject);
     }));
   }
