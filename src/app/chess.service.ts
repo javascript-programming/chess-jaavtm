@@ -33,7 +33,15 @@ export class ChessService {
     });
   }
 
-  getAccount (name , password) {
+  createAccount (name, password) {
+      return new Promise((resolve, reject) => {
+        this.connect().then(() => {
+          this.client.createNamedAccount(password, name).then(resolve).catch(reject);
+        }).catch(reject);
+      });
+  }
+
+  getAccount(name , password) {
       return new Promise((resolve, reject) => {
         this.connect().then(() => {
           this.client.getAccount(name, password).then(resolve).catch(reject);

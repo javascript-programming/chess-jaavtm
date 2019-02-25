@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-create',
@@ -9,13 +12,23 @@ export class CreateComponent implements OnInit {
 
   hide = true;
 
-  constructor() { }
+  constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
+
+  }
 
   ngOnInit() {
   }
 
   createPlayer () {
+    this.authService.create().subscribe((result) => {
 
+      if (this.authService.credentials.isVerified()) {
+        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '..';
+        this.router.navigate([redirect]);
+      }
+    }, (error => {
+      this.snackBar.open(error.message, 'Close' );
+    }));
   }
 
 }
