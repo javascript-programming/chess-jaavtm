@@ -1,4 +1,3 @@
-
 export class Credentials {
   address: string = null;
   name: string;

@@ -24,7 +24,7 @@ export class ChessGame {
         draw   : 0,
         lost   : 0,
         coins  : 100,
-        active : 0
+        active : 1
       };
 
       this.state.users[name] = this.caller;
@@ -203,7 +203,11 @@ export class ChessGame {
   }
 
   getPlayer (address) {
-      return this.state.players[address || this.caller];
+      const player = this.state.players[address || this.caller];
+      if (player)
+        return player;
+
+      throw new Error('Player not found');
   }
 
   getPlayerAddress (name) {

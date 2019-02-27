@@ -5,6 +5,8 @@ import { Observable, of, from } from 'rxjs';
 import { ChessService} from '../chess.service';
 import { Credentials} from './credentials';
 
+import { Player} from '../player';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,8 +23,9 @@ export class AuthService {
     const credentials = this.credentials;
 
     return from(new Promise((resolve, reject) => {
-      this.chessService.getAccount(this.credentials.name, this.credentials.password).then((result: any) => {
-        credentials.address = result.account;
+      this.chessService.getAccount(this.credentials.name, this.credentials.password).then((result: Player) => {
+        credentials.address = result.address;
+        resolve(result);
       }).catch(reject);
     }));
   }
@@ -32,7 +35,7 @@ export class AuthService {
     const credentials = this.credentials;
 
     return from(new Promise((resolve, reject) => {
-      this.chessService.createAccount(this.credentials.name, this.credentials.password).then((result: any) => {
+      this.chessService.createAccount(this.credentials.name, this.credentials.password).then((result: Player) => {
         credentials.address = result.address;
         resolve(result);
       }).catch(reject);

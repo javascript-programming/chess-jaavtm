@@ -13,13 +13,13 @@ declare global {
 export class ChessService {
 
   private client: any;
-  private address: String; // contract address set in environment
+  private address: string; // contract address set in environment
   private contract: any;
   private connected = false;
 
   constructor() {
     this.client = new window.WebClient(environment.tendermintHost);
-    this.address = environment.contract;
+    this.address = window.localStorage.getItem('address') || environment.contract;
   }
 
   connect () {
@@ -52,7 +52,9 @@ export class ChessService {
         this.connect().then(() => {
           this.client.getAccount(name, password).then((result: any) => {
               this.getContract(result.account, password).then(() => {
-                this.contract.getPlayer(result.account, password).then(resolve).catch(reject);
+                this.contract.getPlayer(result.account).then(player => {
+                  resolve(player);
+                }).catch(reject);
             }).catch(reject);
           }).catch(reject);
         }).catch(reject);
@@ -75,11 +77,14 @@ export class ChessService {
   deployContract(account, password) {
     const me = this;
 
+    window.localStorage.clear();
+
     return new Promise( (resolve, reject) => {
 
       this.client.upload(ChessGame).then(() => {
         this.client.deploy(account, password, 'ChessGame').then((result: any) => {
           me.address = result.address;
+          window.localStorage.setItem('address', result.address);
           me.getContract(account, password).then(resolve).catch(reject);
         }).catch(reject);
       }).catch(reject);
