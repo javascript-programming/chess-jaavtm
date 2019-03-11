@@ -5,7 +5,7 @@ import { Observable, of, from } from 'rxjs';
 import { ChessService} from '../chess.service';
 import { Credentials} from './credentials';
 
-import { Player} from '../player';
+import { Player} from '../data/entity/player';
 
 @Injectable({
   providedIn: 'root',

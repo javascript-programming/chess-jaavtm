@@ -74,6 +74,10 @@ export class ChessService {
     });
   }
 
+  getConstractInstance () {
+    return this.contract;
+  }
+
   deployContract(account, password) {
     const me = this;
 
