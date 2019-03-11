@@ -13,7 +13,7 @@ export abstract class BaseResolver<T> implements Resolve<T> {
 
   constructor(private service: AuthService) {
     this.contract = service.chessService.getConstractInstance();
-    this.credentials = service.credentials;
+    this.credentials = service.getCredentials();
   }
 
   abstract resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>|Promise<any>|any;

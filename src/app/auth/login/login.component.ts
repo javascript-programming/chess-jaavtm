@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 import {MatSnackBar} from '@angular/material';
+import {Credentials} from '../credentials';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,13 @@ import {MatSnackBar} from '@angular/material';
 export class LoginComponent implements OnInit {
 
   hide = true;
+  credentials: Credentials;
 
-  constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) { }
+  constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
+    authService.credentials.subscribe(credentials => {
+      this.credentials = credentials;
+    });
+  }
 
   ngOnInit() {
   }
@@ -22,7 +28,7 @@ export class LoginComponent implements OnInit {
   login () {
     this.authService.login().subscribe((result) => {
 
-      if (this.authService.credentials.isVerified()) {
+      if (this.authService.getCredentials().isVerified()) {
         const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '..';
         this.router.navigate([redirect]);
       }

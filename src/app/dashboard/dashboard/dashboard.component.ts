@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
               public router: Router,
               private playerStore: PlayerStore) {
 
-    if (this.authService.credentials.isVerified()) {
+    if (this.authService.getCredentials().isVerified()) {
       if (!playerStore.isLoaded()) {
         playerStore.load();
       }
