@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
+import {PlayerStore} from '../../data/store/player.store';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,16 @@ import {Router} from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(public authService: AuthService,
+              public router: Router,
+              private playerStore: PlayerStore) {
+
+    if (this.authService.credentials.isVerified()) {
+      if (!playerStore.isLoaded()) {
+        playerStore.load();
+      }
+    }
+  }
 
   ngOnInit() {
   }

@@ -1,13 +1,12 @@
 import {Observable} from 'rxjs';
 import {Model} from './abstract.model';
-import {AuthService} from '../../auth/auth.service';
-import {ChessService} from '../../chess.service';
+import {Credentials} from '../../auth/credentials';
 
 export abstract class Store<T> extends Model<Model<T>[]> {
 
   protected loaded = false;
 
-  constructor (private authService: AuthService, private chessService: ChessService) {
+  constructor (private credentials: Credentials, private contract: any) {
     super();
   }
 
@@ -16,13 +15,13 @@ export abstract class Store<T> extends Model<Model<T>[]> {
   }
 
   load(fn, ...params) {
-    const contract = this.getContract();
-    const credentials = this.getCredentials();
+    const contract = this.contract;
+    const credentials = this.credentials;
 
     return new Promise ((resolve, reject) => {
       if (contract) {
         if (credentials.isVerified()) {
-          fn.apply(fn.call(this, params, credentials.password)).then(result => {
+          fn.call(contract, ...params, credentials.password).then(result => {
             this.update(result);
             this.loaded = true;
             resolve(result);
@@ -36,12 +35,12 @@ export abstract class Store<T> extends Model<Model<T>[]> {
     });
   }
 
-  getContract() {
-    return this.chessService.getConstractInstance();
+  getCredentials() {
+    return this.credentials;
   }
 
-  getCredentials() {
-    return this.authService.credentials;
+  getContract() {
+    return this.contract;
   }
 
   getAll(): Model<T>[] {
@@ -62,6 +61,7 @@ export abstract class Store<T> extends Model<Model<T>[]> {
     if (index > -1) {
       items.splice(index, 1);
     }
+    this.update(items);
   }
 
   clear () {

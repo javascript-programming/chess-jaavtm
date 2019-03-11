@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -21,4 +21,5 @@ import { CardComponent } from './card/card.component';
   ],
   declarations: [DashboardComponent, GamesComponent, PlayersComponent, CardComponent]
 })
-export class DashboardModule { }
+export class DashboardModule {
+}
