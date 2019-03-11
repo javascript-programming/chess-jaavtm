@@ -11,21 +11,21 @@ import { Player} from '../data/entity/player';
   providedIn: 'root',
 })
 export class AuthService {
-  credentials: BehaviorSubject<Credentials>;
+  credentials$: BehaviorSubject<Credentials>;
   redirectUrl: string;
 
   constructor(public chessService: ChessService) {
-    this.credentials = new BehaviorSubject(new Credentials());
+    this.credentials$ = new BehaviorSubject(new Credentials());
   }
 
   login(): Observable<any> {
 
-    const credentials = this.credentials.getValue();
+    const credentials = this.credentials$.getValue();
 
     return from(new Promise((resolve, reject) => {
       this.chessService.getAccount(credentials.name, credentials.password).then((result: Player) => {
         credentials.address = result.address;
-        this.credentials.next(credentials);
+        this.credentials$.next(credentials);
         resolve(result);
       }).catch(reject);
     }));
@@ -33,22 +33,22 @@ export class AuthService {
 
   create(): Observable<any> {
 
-    const credentials = this.credentials.getValue();
+    const credentials = this.credentials$.getValue();
 
     return from(new Promise((resolve, reject) => {
       this.chessService.createAccount(credentials.name, credentials.password).then((result: Player) => {
         credentials.address = result.address;
-        this.credentials.next(credentials);
+        this.credentials$.next(credentials);
         resolve(result);
       }).catch(reject);
     }));
   }
 
   getCredentials() {
-    return this.credentials.getValue();
+    return this.credentials$.getValue();
   }
 
   logout(): void {
-    this.credentials.next(new Credentials());
+    this.credentials$.next(new Credentials());
   }
 }

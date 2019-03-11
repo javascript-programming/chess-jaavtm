@@ -17,9 +17,7 @@ export class LoginComponent implements OnInit {
   credentials: Credentials;
 
   constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
-    authService.credentials.subscribe(credentials => {
-      this.credentials = credentials;
-    });
+    this.credentials = authService.credentials$.getValue();
   }
 
   ngOnInit() {

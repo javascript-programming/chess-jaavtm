@@ -10,13 +10,7 @@ import {ChessService} from '../../chess.service';
 export class PlayerStore extends Store<Player> {
 
   constructor (authService: AuthService, chessService: ChessService) {
-    super(authService.getCredentials(), chessService.getConstractInstance());
-
-    authService.credentials.subscribe(credentials => {
-      if (!credentials.isVerified() && this.isLoaded()) {
-        this.clear();
-      }
-    });
+    super(authService.credentials$, chessService.getConstractInstance());
   }
 
   load() {

@@ -1,4 +1,4 @@
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Model} from './abstract.model';
 import {Credentials} from '../../auth/credentials';
 
@@ -6,8 +6,13 @@ export abstract class Store<T> extends Model<Model<T>[]> {
 
   protected loaded = false;
 
-  constructor (private credentials: Credentials, private contract: any) {
+  constructor (private credentials$: BehaviorSubject<Credentials>, private contract: any) {
     super();
+    credentials$.subscribe(credentials => {
+      if (!credentials.isVerified() && this.isLoaded()) {
+        this.clear();
+      }
+    });
   }
 
   isLoaded() {
@@ -16,7 +21,7 @@ export abstract class Store<T> extends Model<Model<T>[]> {
 
   load(fn, ...params) {
     const contract = this.contract;
-    const credentials = this.credentials;
+    const credentials = this.credentials$.getValue();
 
     return new Promise ((resolve, reject) => {
       if (contract) {
@@ -33,10 +38,6 @@ export abstract class Store<T> extends Model<Model<T>[]> {
         reject('No contract');
       }
     });
-  }
-
-  getCredentials() {
-    return this.credentials;
   }
 
   getContract() {
