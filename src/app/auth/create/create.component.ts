@@ -15,7 +15,7 @@ export class CreateComponent implements OnInit {
   credentials: Credentials;
 
   constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
-    this.credentials = authService.credentials$.getValue();
+    this.credentials = authService.credentials;
   }
 
   ngOnInit() {

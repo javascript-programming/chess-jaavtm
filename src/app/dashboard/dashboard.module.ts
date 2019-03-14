@@ -8,7 +8,7 @@ import { PlayersComponent } from './players/players.component';
 
 import {
   MatListModule,
-  MatButtonModule
+  MatButtonModule, MatCardModule
 } from '@angular/material';
 import { CardComponent } from './card/card.component';
 
@@ -17,6 +17,7 @@ import { CardComponent } from './card/card.component';
     CommonModule,
     MatListModule,
     MatButtonModule,
+    MatCardModule,
     DashboardRoutingModule
   ],
   declarations: [DashboardComponent, GamesComponent, PlayersComponent, CardComponent]

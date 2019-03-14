@@ -6,9 +6,9 @@ export abstract class Store<T> extends Model<Model<T>[]> {
 
   protected loaded = false;
 
-  constructor (private credentials$: BehaviorSubject<Credentials>, private contract: any) {
+  constructor (private credentials: Credentials, private contract: any) {
     super();
-    credentials$.subscribe(credentials => {
+    credentials.get$().subscribe(player => {
       if (!credentials.isVerified() && this.isLoaded()) {
         this.clear();
       }
@@ -21,7 +21,7 @@ export abstract class Store<T> extends Model<Model<T>[]> {
 
   load(fn, ...params) {
     const contract = this.contract;
-    const credentials = this.credentials$.getValue();
+    const credentials = this.credentials;
 
     return new Promise ((resolve, reject) => {
       if (contract) {
