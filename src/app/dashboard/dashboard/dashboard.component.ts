@@ -8,14 +8,14 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css', '../../common.styles.css']
 })
 export class DashboardComponent {
 
   player$: Observable<Player>;
 
-  constructor(public authService: AuthService,
-              public router: Router,
+  constructor(private authService: AuthService,
+              private router: Router,
               private playerStore: PlayerStore) {
 
     if (this.authService.getCredentials().isVerified()) {

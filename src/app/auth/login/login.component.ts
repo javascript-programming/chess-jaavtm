@@ -9,14 +9,14 @@ import {Credentials} from '../credentials';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../../common.styles.css']
 })
 export class LoginComponent implements OnInit {
 
   hide = true;
   credentials: Credentials;
 
-  constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.credentials = authService.credentials;
   }
 
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.authService.login().subscribe((result) => {
 
       if (this.authService.getCredentials().isVerified()) {
-        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '..';
+        const redirect = '..';
         this.router.navigate([redirect]);
       }
     }, (error => {

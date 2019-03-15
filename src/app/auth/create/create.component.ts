@@ -7,14 +7,14 @@ import {Credentials} from '../credentials';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css', '../../common.styles.css']
 })
 export class CreateComponent implements OnInit {
 
   hide = true;
   credentials: Credentials;
 
-  constructor(public authService: AuthService, public router: Router, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.credentials = authService.credentials;
   }
 
@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit {
     this.authService.create().subscribe((result) => {
 
       if (this.authService.getCredentials().isVerified()) {
-        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '..';
+        const redirect = '..';
         this.router.navigate([redirect]);
       }
     }, (error => {
