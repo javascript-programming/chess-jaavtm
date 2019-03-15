@@ -12,10 +12,18 @@ import {Router} from '@angular/router';
 })
 export class PlayersComponent implements OnInit {
 
-  private players: Observable<Model<Player>[]>;
+  players$: Observable<Model<Player>[]>;
 
   constructor(public router: Router, private playerStore: PlayerStore) {
-    this.players = this.playerStore.getAll$();
+    this.players$ = this.playerStore.getAll$();
+  }
+
+  logout() {
+
+  }
+
+  back() {
+
   }
 
   ngOnInit() {

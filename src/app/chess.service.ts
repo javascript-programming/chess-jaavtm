@@ -40,7 +40,7 @@ export class ChessService {
         this.connect().then(() => {
           this.client.createNamedAccount(password, name).then((result: any) => {
               this.getContract(result.address, password).then(() => {
-                this.contract.registerPlayer(name, password).then(resolve).catch(reject);
+                this.contract.registerPlayer(name, password).then(value => resolve(value.data)).catch(reject);
             }).catch(reject);
           }).catch(reject);
         }).catch(reject);

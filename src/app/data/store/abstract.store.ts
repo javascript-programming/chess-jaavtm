@@ -26,8 +26,10 @@ export abstract class Store<T> extends Model<Model<T>[]> {
     return new Promise ((resolve, reject) => {
       if (contract) {
         if (credentials.isVerified()) {
-          fn.call(contract, ...params, credentials.password).then(result => {
-            this.update(result);
+          fn.call(contract, ...params, credentials.password).then((result: T[]) => {
+            if (result && result.length) {
+              this.update(result.map((item: T) => new Model(item)));
+            }
             this.loaded = true;
             resolve(result);
           }).catch(reject);

@@ -1,8 +1,14 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {distinctUntilChanged, shareReplay} from 'rxjs/operators';
 
-export abstract class Model<T> {
+export class Model<T> {
   protected readonly state$: BehaviorSubject<T> = new BehaviorSubject(undefined);
+
+  constructor (data?: T) {
+    if (data) {
+      this.update(data);
+    }
+  }
 
   getValue(): T {
     return this.state$.getValue();
