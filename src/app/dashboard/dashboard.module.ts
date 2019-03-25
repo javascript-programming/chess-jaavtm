@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GamesComponent } from './games/games.component';
 import { PlayersComponent } from './players/players.component';
+import { SelectionModel} from '@angular/cdk/typings/esm5/collections';
 
 import {
   MatListModule,

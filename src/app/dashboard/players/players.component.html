@@ -1,37 +1,40 @@
-<mat-card>
+<mat-card xmlns="http://www.w3.org/1999/html">
   <mat-card-header>
     <mat-card-title>Players</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <table mat-table [dataSource]="players$ | async">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name. </th>
-        <td mat-cell *matCellDef="let element;"> {{ element.getValue().name }} </td>
+        <th class="name_header" mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let player;"> {{ player.getValue().name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="won">
-        <th mat-header-cell *matHeaderCellDef> Won. </th>
-        <td mat-cell *matCellDef="let element;"> {{ (element.get$() | async).won }} </td>
+        <th class="number_header" mat-header-cell *matHeaderCellDef> Won </th>
+        <td mat-cell *matCellDef="let player;"> {{ player.getValue().won }} </td>
       </ng-container>
 
       <ng-container matColumnDef="draw">
-        <th mat-header-cell *matHeaderCellDef> Draw. </th>
-        <td mat-cell *matCellDef="let element;"> {{ (element.get$() | async).draw }} </td>
+        <th class="number_header" mat-header-cell *matHeaderCellDef> Draw </th>
+        <td mat-cell *matCellDef="let player;"> {{ player.getValue().draw }} </td>
       </ng-container>
 
       <ng-container matColumnDef="lost">
-        <th mat-header-cell *matHeaderCellDef> Lost. </th>
-        <td mat-cell *matCellDef="let element;"> {{ (element.get$() | async).lost }} </td>
+        <th class="number_header" mat-header-cell *matHeaderCellDef> Lost </th>
+        <td mat-cell *matCellDef="let player;"> {{ player.getValue().lost }} </td>
       </ng-container>
 
       <ng-container matColumnDef="coins">
-        <th mat-header-cell *matHeaderCellDef> Credits. </th>
-        <td mat-cell *matCellDef="let element;"> {{ (element.get$() | async).coins }} </td>
+        <th class="challenge_header" mat-header-cell *matHeaderCellDef> Credits </th>
+        <td mat-cell *matCellDef="let player;">
+          <span>{{ player.getValue().coins }}</span>
+          <span class="challenge"><button *ngIf="selection.isSelected(player)" mat-button (click)="challengePlayer(player)">Challenge</button></span>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns;">
-
+      <tr mat-row *matRowDef="let player; columns: columns;"
+        (click)="selectPlayer(player)">
       </tr>
     </table>
   </mat-card-content>

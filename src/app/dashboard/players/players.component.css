@@ -1,1 +1,15 @@
+.name_header {
+  width: 100px;
+}
 
+.number_header {
+  width: 50px;
+}
+
+.challenge_header {
+  width:200px;
+}
+
+.challenge {
+  padding-left: 20px;
+}
