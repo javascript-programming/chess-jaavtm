@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate([redirect]);
       }
     }, (error => {
-      this.snackBar.open(error.message, 'Close' );
+      this.snackBar.open(error.message, 'Close', { duration : 1000 } );
     }));
   }
 

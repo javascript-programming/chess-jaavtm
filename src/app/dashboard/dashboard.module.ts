@@ -8,19 +8,22 @@ import { PlayersComponent } from './players/players.component';
 
 import {
   MatListModule,
-  MatButtonModule, MatCardModule
+  MatButtonModule, MatCardModule, MatGridListModule, MatTableModule
 } from '@angular/material';
 import { CardComponent } from './card/card.component';
+import { PlayerComponent } from './players/player/player.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MatListModule,
+    MatGridListModule,
     MatButtonModule,
     MatCardModule,
+    MatTableModule,
     DashboardRoutingModule
   ],
-  declarations: [DashboardComponent, GamesComponent, PlayersComponent, CardComponent]
+  declarations: [DashboardComponent, GamesComponent, PlayersComponent, CardComponent, PlayerComponent]
 })
 export class DashboardModule {
 }

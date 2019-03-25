@@ -14,6 +14,7 @@ import {AuthService} from '../../auth/auth.service';
 export class PlayersComponent implements OnInit {
 
   players$: Observable<Model<Player>[]>;
+  columns: string[] = ['name', 'won', 'draw', 'lost', 'coins'];
 
   constructor(private authService: AuthService, private router: Router, private playerStore: PlayerStore) {
     this.players$ = this.playerStore.getAll$();
